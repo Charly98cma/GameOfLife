@@ -29,7 +29,11 @@ def new_gen(prev_gen) -> list:
             if neigh_cell.getState() == 'L':
                 n_neigh += 1
         # Kill cell if overpopulation or starvation
-        changes = add_change(changes, (x,y), 'L' if n_neigh in [2,3] else 'D')
+        if cell.getState() == 'L' and n_neigh not in [2,3]:
+            changes = add_change(changes, (x,y), 'D')
+        # Revive a cell
+        elif cell.getState() == 'D' and n_neigh in [2,3]:
+            changes = add_change(changes, (x,y), 'L')
     return changes
 
 """
