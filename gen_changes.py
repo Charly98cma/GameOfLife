@@ -18,7 +18,7 @@ def newGen(prev_gen, dims) -> list:
         x,y = cell.getCoords()
         adj_coords = [(x-1, y-1), (x, y-1), (x+1, y-1),
                       (x-1, y  ),           (x+1, y  ),
-                      (x-1, y-1), (x, y+1), (x+1, y+1)]
+                      (x-1, y+1), (x, y+1), (x+1, y+1)]
         adj_cells = [(a,b) for a,b in adj_coords
                      if a in range(dims) and b in range(dims)]
         # Alive neighbour cell counter
@@ -31,11 +31,11 @@ def newGen(prev_gen, dims) -> list:
             if neigh_cell.getState() == 'L':
                 n_neigh += 1
         # Kill cell if overpopulation or starvation
-        if cell.getState() == 'L' and n_neigh not in [2,3]:
-            changes = add_change(changes, (x,y), 'D')
-        # Revive a cell
-        elif cell.getState() == 'D' and n_neigh in [2,3]:
-            changes = add_change(changes, (x,y), 'L')
+        if n_neigh not in [2,3] and cell.getState() == 'L':
+            add_change(changes, (x,y), 'D')
+        # Revive a cell with exactly 3 neighbours
+        elif n_neigh == 3 and cell.getState() == 'D':
+            add_change(changes, (x,y), 'L')
     return changes
 
 """
@@ -49,7 +49,7 @@ coords : tuple  -> Coordinated of the cell => (X,Y)
 state  : string -> New state of the cell   => 'L' (lives) OR 'D' (dies)
 
 """
-def __add_change(changes, coords, state) -> list:
+def add_change(changes, coords, state) -> list:
     changes.append(
         {
             "coords" : coords,
