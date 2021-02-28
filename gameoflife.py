@@ -110,4 +110,4 @@ class GameOfLife:
                 )
             )
         pygame.display.update()
-        sleep(0.1)
+        sleep(0.05)
