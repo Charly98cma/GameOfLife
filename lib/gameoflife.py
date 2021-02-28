@@ -5,8 +5,7 @@ from sys   import exit
 from time  import time, sleep
 from numpy import empty as npEmpty
 
-from cell import Cell
-import gen_changes
+from lib import cell, gen_changes
 
 FPS = 30
 FramePerSec = pygame.time.Clock()
@@ -24,7 +23,7 @@ class GameOfLife:
         # Params and values
         self.nth_gen = 1
         self.dims = dims
-        self.world = npEmpty((dims, dims), Cell)
+        self.world = npEmpty((dims, dims), cell.Cell)
         self.changes = []
         # Pygame parameters initialization
         self.screen = None
@@ -55,7 +54,7 @@ class GameOfLife:
         for i in range(self.dims):
             # Fill each position with a dead cell
             for j in range(self.dims):
-                self.world[i,j] = Cell((i,j),
+                self.world[i,j] = cell.Cell((i,j),
                                        'L' if (i,j) in livingCells else 'D')
         self.initGrid(livingCells)
 

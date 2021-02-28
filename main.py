@@ -1,4 +1,4 @@
-import gameoflife as GoL
+from lib import gameoflife as GoL
 
 def main():
     print("""Welcome to my...
