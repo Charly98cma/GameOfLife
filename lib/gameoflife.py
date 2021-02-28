@@ -19,7 +19,7 @@ CAPTION = "The Game of Life"
 
 class GameOfLife:
 
-    def __init__(self, dims):
+    def __init__(self, dims, layout_coords):
         # Params and values
         self.nth_gen = 1
         self.dims = dims
@@ -29,26 +29,11 @@ class GameOfLife:
         self.screen = None
         # Running methods
         try:
-            self.genWorld(self.userInput())
+            self.genWorld(layout_coords)
             self.loop()
         except KeyboardInterrupt:
             pass
         print("\n--- Number of generations: %s" % self.nth_gen)
-
-    def userInput(self):
-        print("\nEnter the coordinates of the living cells [Format => X,Y]")
-        print("-- Write DONE to finish --")
-        livingCells = []
-        while True:
-            try:
-                userInput = input()
-                if userInput == "" or userInput == "DONE":
-                    print("\nLiving cells ->", livingCells)
-                    return livingCells
-                coords = userInput.split(',')
-                livingCells.append((int(coords[0]), int(coords[1])))
-            except (ValueError, IndexError):
-                print("The coordinates must be on the format \"X,Y\"")
 
     def genWorld(self, livingCells):
         for i in range(self.dims):
@@ -109,4 +94,4 @@ class GameOfLife:
                 )
             )
         pygame.display.update()
-        sleep(0.05)
+        sleep(0.025)
