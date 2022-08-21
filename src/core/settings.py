@@ -1,0 +1,2 @@
+
+BLOCK_ZISE = 20
